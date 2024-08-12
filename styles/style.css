@@ -1,0 +1,24 @@
+/* General */
+
+* {
+    box-sizing: border-box
+}
+
+body {
+    margin: 0;
+    padding:2em;
+    font-family: 'Red Hat Text'
+
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* Typography */
+
+.main-title{
+    margin:0;
+    font-size: 4rem;
+}
