@@ -7,7 +7,10 @@
 body {
     margin: 0;
     padding:2em;
-    font-family: 'Red Hat Text'
+    font-family: 'Red Hat Text', sans-serif;
+    font-size: 16px;
+    color: hsl(14, 65%, 9%);
+    background-color: hsl(13, 31%, 94%);
 
 }
 
@@ -16,9 +19,115 @@ img {
     max-width: 100%;
 }
 
+h1, h2, h3, h4, h5, div {
+    margin: 0;
+}
+
 /* Typography */
 
 .main-title{
     margin:0;
     font-size: 4rem;
 }
+
+.card-img{
+    margin-bottom: 2em;
+    height: 17em;
+    object-fit:cover;
+    border-radius: .8em;
+    width: 100%;
+}
+
+.image-cta-div{
+    position: relative;
+}
+
+
+
+.fa-cart-plus{
+    font-size: 1.4rem;
+    color: hsl(14, 86%, 42%);
+}
+
+
+.card-cta-title{
+    font-size: 1.1rem;
+    /* width: 100%;
+    text-align:center; */
+}
+
+.card-tag{
+    font-weight: 400;
+    color: hsl(12, 20%, 44%);
+    font-size: 1.1rem;
+}
+
+.card-title{
+    font-weight: 500;
+    font-size:1.4rem;
+    margin: 3px 0;
+}
+
+.card-price {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: hsl(14, 86%, 42%);
+}
+
+.cart-title{
+    color: hsl(14, 86%, 42%);
+    font-size:2rem;
+    margin-bottom:2em;
+}
+
+.cart-empty-text{
+    text-align:center;
+    color: hsl(12, 20%, 44%);
+
+}
+
+/* Layout */
+
+.card {
+    margin: 2em 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-cta-div{
+    bottom: .3em;
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.card-cta-btn{
+    display: flex;
+    background-color: white;
+    padding: .7em 2em;
+    border: 2px solid hsl(12, 20%, 44%);
+    border-radius: 10em;
+    align-items: center;
+    gap:.5em;
+    cursor: pointer;
+    transition: background-color 500ms;
+}
+
+.card-cta-btn:hover, .card-cta-btn:focus{
+    background-color: hsl(13, 31%, 94%);
+}
+
+.cart-empty-photo{
+    margin: 0 auto;
+}
+
+.section-right {
+    background-color: hsl(20, 50%, 98%);
+    padding: 2em;
+}
+
+.image-cta-div { order: -2; }
+
+.card-tag{ order: -1 }
+
