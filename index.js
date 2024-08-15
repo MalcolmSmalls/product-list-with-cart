@@ -15,6 +15,9 @@ document.addEventListener('click', (e)=> {
     if(e.target.dataset.itemId){
         deleteFromCart(e.target.dataset.itemId)
     }
+    if(e.target.className === "cart-btn"){
+        document.body.innerHTML += loadCartModal()
+    }
 })
 
 
@@ -109,6 +112,51 @@ function deleteFromCart(id){
     cart = [...newArr]
     getTotalQuantity()
     renderCart()
+}
+
+function loadCartModal(){
+    return `
+        <div class="overlay"></div>  
+        <div class="order-modal">
+            <div class="check-div">
+            <i class="fa-solid fa-check"></i>
+            </div>
+            <h2 class="modal-title">Order Confirmed</h2>
+            <p class="modal-subtext">We hope you enjoy your food!</p>
+
+            <div class="modal-item-div">
+            <div class="modal-item-content">
+                <img  class="modal-item-img" src="./assets/images/image-tiramisu-thumbnail.jpg">
+                <div class="modal-item-details">
+                <h5 class="modal-item-title">Classic Tiramisu</h5>
+                <span class="modal-item-amount">1x</span> 
+                <span class="modal-item-price">@ $6.00</span>
+                </div>
+                <span class="modal-item-total">$6.00</span>
+            </div>
+            </div>
+
+            <div class="modal-item-div">
+            <div class="modal-item-content">
+                <img  class="modal-item-img" src="./assets/images/image-tiramisu-thumbnail.jpg">
+                <div class="modal-item-details">
+                <h5 class="modal-item-title">Classic Tiramisu</h5>
+                <span class="modal-item-amount">1x</span> 
+                <span class="modal-item-price">@ $6.00</span>
+                </div>
+                <span class="modal-item-total">$6.00</span>
+            </div>
+            </div>
+
+
+            <div class="modal-total">
+            <span class="modal-total-span">Order Total</span>
+            <h4 class="modal-total-title">$46.00</h4>
+        </div>
+        <a class="modal-btn" href="#">Start New Order</a>
+
+        </div> 
+    `
 }
 
 function renderCart(){
