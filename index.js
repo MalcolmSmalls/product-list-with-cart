@@ -3,11 +3,17 @@ import {data} from './data.js'
 const leftSection = document.querySelector('.section-left')
 const rightSection = document.querySelector('.section-right')
 let cart = []
+let totalQuantity = 0
+let total = 0
 
 document.addEventListener('click', (e)=> {
     if(e.target.dataset.id){
         addToCart(e.target.dataset.id)
+        getTotalQuantity()
         renderCart()
+    }
+    if(e.target.dataset.itemId){
+        deleteFromCart(e.target.dataset.itemId)
     }
 })
 
@@ -39,26 +45,40 @@ function addToCart(id){
     const targetItem = data.filter(item => {
         return item.id === id
     })[0]
-    cart.push(targetItem)
+    total += targetItem.price
+    targetItem.quantity++
+    if(!cart.includes(targetItem)){
+        cart.push(targetItem)
+    }
 }
 
 function getCart(){
-    let cartArr = [`<h2 class="cart-title">Your Cart (${cart.length})</h2>`]
+    let cartArr = [`<h2 class="cart-title">Your Cart (${totalQuantity})</h2>`]
     if(cart.length){
         cart.forEach(item => {
-            console.log(item)
             cartArr.push(`
                 <div class="cart-item-div">
                     <h3 class="cart-item-title">${item.name}</h3>
                     <div class="cart-summary-div">
-                        <span class="cart-amount">1x</span> 
-                        <span class="cart-item-price">@ $${item.price}</span>
-                        <span class="cart-item-total">$6.00</span>
+                        <span class="cart-amount">${item.quantity}x</span> 
+                        <span class="cart-item-price">@ $${item.price.toFixed(2)}</span>
+                        <span class="cart-item-total">$${(item.price * item.quantity).toFixed(2)}</span>
                     </div>
-                    <div class="cart-delete-btn"><span class="cart-delete-span">&times;</span></div>
+                    <div class="cart-delete-btn" data-item-id=${item.id}><span class="cart-delete-span" data-item-id=${item.id}>&times;</span></div>
                 </div>
                 `)
         })
+        cartArr.push(`
+                <div class="cart-total-div">
+                    <h5 class="cart-total-title">Order Total</h5>
+                    <h3 class="cart-total">$${total.toFixed(2)}</h3>
+                    </div>
+                    <div class="disclaimer">
+                    <p><i class="fa-solid fa-tree"></i>This is a <span class="bold">carbon neutral</span> delivery.</p>
+                    </div>
+                    <a class="cart-btn" href="#">Confirm Order</a>
+   
+            `)
     }else{
         cartArr.push(`<img class="cart-empty-photo" src="./assets/images/illustration-empty-cart.svg">
                       <p class="cart-empty-text"> Your added items will appear here</p>`)
@@ -67,6 +87,29 @@ function getCart(){
     return cartArr.join('')
 }
 
+function getTotalQuantity(){
+    totalQuantity = 0
+    cart.forEach(item => totalQuantity += item.quantity)
+
+}
+
+function deleteFromCart(id){
+    total = 0
+    let newArr = []
+    cart.forEach(item =>{
+        if(item.id === id){
+            item.quantity--
+        }
+
+        if(item.quantity > 0){
+            newArr.push(item)
+        }
+    })
+    cart.forEach(item => { total += item.quantity * item.price})
+    cart = [...newArr]
+    getTotalQuantity()
+    renderCart()
+}
 
 function renderCart(){
     rightSection.innerHTML = getCart()
