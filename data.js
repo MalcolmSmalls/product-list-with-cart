@@ -1,4 +1,4 @@
-[
+export const data = [
     {
        "image": {
             "thumbnail": "./assets/images/image-waffle-thumbnail.jpg",
