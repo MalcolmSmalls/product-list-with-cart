@@ -405,6 +405,12 @@ h1, h2, h3, h4, h5, div, .main-title, body, p {
         margin-bottom: 0;
     }
 
+    .modal-container{
+        margin-top:2em;
+        overflow-y: scroll;
+        height: 200px;
+    }
+
     .order-modal{
         margin: auto auto;
         width: 40%;

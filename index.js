@@ -24,8 +24,11 @@ document.addEventListener('click', (e)=> {
     }
     if(!document.querySelector('.overlay').classList.contains('hidden')){
         if(e.target.parentElement === document.body){
-        document.querySelector('.overlay').classList.add('hidden')
+        closeModal()
         }
+    }
+    if(e.target.classList.contains("modal-btn")){
+        closeModal()
     }
 })
 
@@ -141,7 +144,13 @@ function getModalItems(){
                         </div>
             `)
     })
+    document.querySelector('.modal-total-title').innerText = `$${total.toFixed(2)}`
     return htmlHolder.join('')
+}
+
+function closeModal(){
+    document.querySelector('.overlay').classList.add('hidden')
+    clearModal()
 }
 
 function renderCart(){
@@ -150,6 +159,10 @@ function renderCart(){
 
 function renderModal(){
     modalContainer.innerHTML += getModalItems()
+}
+
+function clearModal(){
+    modalContainer.innerHTML = ''
 }
 
 leftSection.innerHTML += getItems()
