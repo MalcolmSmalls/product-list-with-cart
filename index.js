@@ -12,8 +12,9 @@ let total = 0
 document.addEventListener('click', (e)=> {
     if(e.target.dataset.id){
         addToCart(e.target.dataset.id)
-        getTotalQuantity()
+        getQuantity()
         renderCart()
+        getAmountButton(e.target.dataset.id)
     }
     if(e.target.dataset.itemId){
         deleteFromCart(e.target.dataset.itemId)
@@ -30,6 +31,14 @@ document.addEventListener('click', (e)=> {
     if(e.target.classList.contains("modal-btn")){
         closeModal()
     }
+    if(e.target.classList.contains('minus')){
+        updateQuantity('minus', e.target.dataset.btnId)
+        getQuantity()
+    }
+    if(e.target.classList.contains('add')){
+        updateQuantity('add', e.target.dataset.btnId)
+        getQuantity()
+    }
 })
 
 
@@ -42,7 +51,7 @@ function getItems(){
                 <h5 class="card-tag">${item.category}</h5>
                 <div class="image-cta-div">
                     <img class="card-img" src="${item.image.desktop}" />
-                    <div class="card-cta-div">
+                    <div class="card-cta-div" data-btn-id=${item.id}>
                     <div class="card-cta-btn" data-id=${item.id}>
                         <i class="fa-solid fa-cart-plus" data-id=${item.id}></i>
                         <h2 class="card-cta-title" data-id=${item.id}>Add to Cart</h2>
@@ -102,14 +111,20 @@ function getCart(){
     return cartArr.join('')
 }
 
-function getTotalQuantity(){
+function getQuantity(){
     totalQuantity = 0
     cart.forEach(item => totalQuantity += item.quantity)
+    return getQuantity
+}
 
+function getTotalPrice(){
+    total = 0
+    cart.forEach(item => total += item.quantity * item.price)
+    return total
 }
 
 function deleteFromCart(id){
-    total = 0
+    // total = 0
     let newArr = []
     cart.forEach(item =>{
         if(item.id === id){
@@ -120,9 +135,9 @@ function deleteFromCart(id){
             newArr.push(item)
         }
     })
-    cart.forEach(item => { total += item.quantity * item.price})
+    // cart.forEach(item => { total += item.quantity * item.price})
     cart = [...newArr]
-    getTotalQuantity()
+    total = getTotalPrice()
     renderCart()
 }
 
@@ -146,6 +161,43 @@ function getModalItems(){
     })
     document.querySelector('.modal-total-title').innerText = `$${total.toFixed(2)}`
     return htmlHolder.join('')
+}
+
+function getAmountButton(id){
+    const arr = document.querySelectorAll('.card-cta-div')
+    let quantity = 0
+    cart.forEach(item => {
+            if(item.id === id){
+                quantity = item.quantity
+            }
+
+    })
+    arr.forEach(item => {
+        if(item.dataset.btnId === id){
+            item.innerHTML = `<div class="card-cta-btn active-btn">
+            <div class="item-amount-container"><p class="item-amount-btn dash minus" data-btn-id=${id}>&mdash;</p></div>
+            <h2 class="card-cta-title">${quantity}</h2>
+            <div class="item-amount-container"><p class="item-amount-btn add" data-btn-id=${id}>+</p></div>
+          </div>`
+        }
+    })
+
+}
+
+function updateQuantity(operation, id){
+   cart.forEach(item =>{
+    if(item.id == id){
+        if(operation === "minus"){
+            item.quantity--
+        }else{
+            item.quantity++
+        }
+    }
+   })
+   getAmountButton(id)
+   total = getTotalPrice()
+   getQuantity()
+   renderCart()
 }
 
 function closeModal(){
